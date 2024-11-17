@@ -42,6 +42,7 @@ result =
   |> Math.multiply(3)
 # => 30
 
+
 # -- Limitations --
 # The pipe operator only works when the function you are piping into expects the
 # piped value as its first argument.  If the function expects the value in a
@@ -55,7 +56,7 @@ end
 
 result =
   10
-  |> (&Math.subtract(&1, 5)).()
+  |> (&Math.subtract(5, &1)).()
 # => 5
 
 # -- then/2 --
@@ -66,7 +67,7 @@ result =
 result =
   "  hello  "
   |> String.trim()
-  |> then(&String.upcase/1)
+  |> String.upcase()
   |> then(&String.reverse/1)
   |> then(fn x ->
     IO.puts("Result: #{x}")
@@ -94,15 +95,18 @@ result =
 # value of the expression and its result.  The `inspect` function can also be
 # used for debugging, but it is less powerful than `dbg`.
 
+require Logger
+
 list = [1, 2, 3, 4, 5]
 
 dbg(list)
 # =>
-# [iex:10: (file)]
+# [hello_world.ex:10: (file)]
 # list #=> [1, 2, 3, 4, 5]
 
+dbg()
 
-# When used on pipelien, dbg will print value of each transformation:
+# When used on pipeline, dbg will print value of each transformation:
 result =
   "  hello  "
   |> String.trim()

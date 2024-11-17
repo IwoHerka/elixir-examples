@@ -1,5 +1,5 @@
 # case expression allows to compare a value against many patterns until we find
-# a matching one. General form:application
+# a matching one. General form:
 
 case expression do
   pattern1 -> expression1
@@ -11,8 +11,7 @@ end
 # Example:
 
 case {1, 2, 3} do
-  {4, 5, 6} ->
-    "Does not match"
+  {4, 5, 6} -> "Does not match"
   {1, x, 3} ->
     "This clause will match and bind x to 2, x = #{x}"
   _ ->

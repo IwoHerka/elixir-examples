@@ -33,9 +33,7 @@ defmodule Math do
     true
   end
 
-  def is_even(_n) do
-    false
-  end
+  def is_even(_n), do: false
 
 
   # -- Default Arguments --
@@ -60,7 +58,7 @@ defmodule Math do
   # Math.greet/1 and Math.greet/2.
 
 
-  # -- Return Values --
+  # -- Return values --
   # Functions in Elixir always return the value of the last expression.
   # However, other expressions are still evaluated, which means they can be
   # called for side effects:

@@ -2,7 +2,13 @@
 
 if condition do
   expression
+  x = 2
 else
+  expression
+end
+
+
+if condition do
   expression
 end
 

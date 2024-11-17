@@ -58,8 +58,8 @@ x = 42
   IO.puts("x = #{x}")
 end).()
 # =>
-# x =42
-# x =0
+# x = 42
+# x = 0
 
 x
 # => 42
@@ -75,7 +75,7 @@ f = fn
 end
 
 f.(1, 2)
-# => 4
+# => 3
 
 f.(-1, 3)
 # => -3
@@ -116,3 +116,6 @@ f = fn name -> "Hello #{name}" end
 &expression
 
 # Where positional arguments are captured using &1, &2, etc.
+
+Enum.filter([1, 2, 3, 4], &(&1 > 2))
+# => [3, 4]

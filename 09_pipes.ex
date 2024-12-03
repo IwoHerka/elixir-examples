@@ -4,7 +4,7 @@
 # cleaner code by chaining function calls.
 
 # Basic usage:
-# Instead of creatign a nested chain:
+# Instead of creating a nested chain:
 result = String.reverse(String.upcase(String.trim("  hello  ")))
 
 # You can use the pipe operator:
@@ -28,7 +28,7 @@ result =
 
 # The result will be 6.
 
-# -- Pipe operator with wultiple arguments --
+# -- Pipe operator with multiple arguments --
 # When the function you are piping into takes multiple arguments, you can use
 # the pipe operator to pass the first argument, and provide the rest manually:
 
@@ -48,6 +48,11 @@ result =
 # piped value as its first argument.  If the function expects the value in a
 # different position, you will need to use an anonymous function or rearrange
 # the arguments.
+
+
+add = fn a, b -> a + b end
+
+
 
 # Example of rearranging arguments:
 defmodule Math do
@@ -104,7 +109,6 @@ dbg(list)
 # [hello_world.ex:10: (file)]
 # list #=> [1, 2, 3, 4, 5]
 
-dbg()
 
 # When used on pipeline, dbg will print value of each transformation:
 result =

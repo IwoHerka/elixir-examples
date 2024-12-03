@@ -68,13 +68,13 @@ IO.inspect(result, label: "nested")
 
 # Example of using the :into option to generate a map:
 list = [{"a", 1}, {"b", 2}, {"c", 3}]
-map = for {key, value} <- list, into: %{}, do: {key, value}
+map = for {key, value} <- list, into: %{}, do: {key, value * 2}
 # => %{"a" => 1, "b" => 2, "c" => 3}
 
 # Example of using the :into option to generate a binary:
 chars = 'hello'
-binary = for char <- chars, into: "", do: <<char>>
-# => "hello"
+binary = for char <- chars, into: "", do: char
+# => [?h, ?e, ?l, ?l, ?o]
 
 
 # -- :reduce option --
@@ -94,7 +94,6 @@ sentence = for word <- words, reduce: "" do
   acc -> acc <> word <> " "
 end
 # => "hello world "
-
 
 # -- Recursion --
 # Recursion is a fundamental concept in functional programming and is often used

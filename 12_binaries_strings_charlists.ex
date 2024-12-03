@@ -9,14 +9,17 @@
 ?a
 # => 97
 
+
 # We can represent any Unicode character in an Elixir string by using the \uXXXX
 # notation and the hex representation of its code point number:
-"\u0061" == "a"
+"hello \u0061" == "hello a"
 # => true
+
+घ ऒ	ओ	औ	क	ख, ą, ę, ć, ł, ...
+# 11100000 10100100 10011000
 
 0x0061 == 97 == ?a
 # => true
-
 
 # -- UTF-8 --
 # In UTF-8, each code point (which represents a character) can be expressed
@@ -45,9 +48,8 @@ IO.inspect("hełło", binaries: :as_binaries)
 <<0::1, 0::1, 1::1, 1::1>> == <<3::4>>
 # It's the same as 0b0011
 
-
 # -- Binary --
-# A binary is a sequence of bytes, which is a sequence of 8-bit unsigned integers.
+# A binary is a bitstring where the number of bits is divisible by 8.
 
 is_bitstring(<<3::4>>)
 # => true
@@ -71,7 +73,7 @@ String.length("hełło")
 # => 5
 
 byte_size("hełło")
-# => 6
+# => 7
 
 
 # -- Charlists --
@@ -95,3 +97,5 @@ String.to_charlist("hełło")
 #   decimal 322
 # UTF-8 11000101 10000010
 # bitstring <<197, 130>>
+
+11000101 10000010

@@ -48,6 +48,7 @@ defmodule MyApp do
   defdelegate add(a, b), to: MyApp.Utilities.Math
 end
 
+
 # This creates a function `add/2` in `MyApp` that delegates to `MyApp.Utilities.Math.add/2`.
 
 # You can also specify a different function name in the target module:

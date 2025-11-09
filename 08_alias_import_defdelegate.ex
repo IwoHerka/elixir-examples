@@ -15,7 +15,6 @@ alias MyApp.Utilities.Math
 
 # Now you can use `Math` instead of `MyApp.Utilities.Math`.
 
-
 # -- Import --
 # The `import` directive allows you to bring functions and macros from other modules into the current scope.
 # This means you can call them without the module prefix.

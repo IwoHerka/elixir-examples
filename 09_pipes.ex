@@ -7,6 +7,12 @@
 # Instead of creating a nested chain:
 result = String.reverse(String.upcase(String.trim("  hello  ")))
 
+result = "  hello  "
+result = String.trim(result)
+result = String.upcase(result)
+result = String.reverse(result)
+
+
 # You can use the pipe operator:
 result =
   "  hello  "
@@ -125,7 +131,6 @@ result =
 # |> String.reverse() #=> "OLLEH"
 # => "OLLEH"
 
-
 result =
   "  hello  "
   |> String.trim()
@@ -135,3 +140,145 @@ result =
   |> String.reverse()
   |> IO.inspect(label: "After reverse")
 # => "OLLEH"
+
+# -- More examples --
+
+# Data transformation with lists:
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+result =
+  numbers
+  |> Enum.filter(&(&1 > 5))
+  |> Enum.map(&(&1 * 2))
+  |> Enum.sum()
+# => 90
+
+
+# Working with maps in a pipeline:
+user_data = %{name: "john doe", age: 30, email: "JOHN@EXAMPLE.COM"}
+
+formatted_user =
+  user_data
+  |> Map.update!(:name, &String.split(&1, " "))
+  |> Map.update!(:name, fn parts -> Enum.map(parts, &String.capitalize/1) end)
+  |> Map.update!(:name, &Enum.join(&1, " "))
+  |> Map.update!(:email, &String.downcase/1)
+  |> Map.put(:updated_at, DateTime.utc_now())
+# => %{name: "John Doe", age: 30, email: "john@example.com", updated_at: ~U[...]}
+
+
+# File processing pipeline:
+# (This is a conceptual example)
+"/path/to/file.txt"
+|> File.read!()
+|> String.split("\n")
+|> Enum.filter(&(&1 != ""))
+|> Enum.map(&String.trim/1)
+|> Enum.take(10)
+
+
+# JSON parsing and transformation:
+json_string = ~s({"users": [{"name": "alice", "score": 95}, {"name": "bob", "score": 87}]})
+
+top_scorer =
+  json_string
+  |> Jason.decode!()
+  |> Map.get("users")
+  |> Enum.max_by(& &1["score"])
+  |> Map.get("name")
+  |> String.upcase()
+# Note: Requires Jason library
+# => "ALICE"
+
+
+# Using pipe with pattern matching:
+data = {:ok, [1, 2, 3, 4, 5]}
+
+result =
+  data
+  |> then(fn
+    {:ok, list} -> list
+    {:error, _} -> []
+  end)
+  |> Enum.sum()
+# => 15
+
+
+# Complex data processing pipeline:
+orders = [
+  %{id: 1, customer: "Alice", amount: 100, status: "completed"},
+  %{id: 2, customer: "Bob", amount: 150, status: "pending"},
+  %{id: 3, customer: "Alice", amount: 200, status: "completed"},
+  %{id: 4, customer: "Charlie", amount: 75, status: "completed"}
+]
+
+total_completed_by_alice =
+  orders
+  |> Enum.filter(&(&1.status == "completed"))
+  |> Enum.filter(&(&1.customer == "Alice"))
+  |> Enum.map(& &1.amount)
+  |> Enum.sum()
+# => 300
+
+
+# Using pipe with Enum.reduce:
+sentence = "the quick brown fox jumps"
+
+word_count_map =
+  sentence
+  |> String.split()
+  |> Enum.reduce(%{}, fn word, acc ->
+    Map.update(acc, word, 1, &(&1 + 1))
+  end)
+# => %{"brown" => 1, "fox" => 1, "jumps" => 1, "quick" => 1, "the" => 1}
+
+
+# Pipe with comprehensions:
+matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+flattened_doubled =
+  matrix
+  |> List.flatten()
+  |> Enum.map(&(&1 * 2))
+# => [2, 4, 6, 8, 10, 12, 14, 16, 18]
+
+# Alternative using comprehension:
+flattened_doubled =
+  for row <- matrix,
+      num <- row do
+    num * 2
+  end
+# => [2, 4, 6, 8, 10, 12, 14, 16, 18]
+
+
+# Pipe with custom module functions:
+defmodule StringHelpers do
+  def remove_punctuation(string) do
+    String.replace(string, ~r/[[:punct:]]/, "")
+  end
+
+  def count_words(string) do
+    string
+    |> String.split()
+    |> length()
+  end
+end
+
+text = "Hello, world! How are you?"
+
+word_count =
+  text
+  |> StringHelpers.remove_punctuation()
+  |> String.downcase()
+  |> StringHelpers.count_words()
+# => 5
+
+
+# Using pipe with Stream for lazy evaluation:
+# Stream is useful for large datasets or infinite sequences
+result =
+  1..1_000_000
+  |> Stream.map(&(&1 * 2))
+  |> Stream.filter(&(rem(&1, 3) == 0))
+  |> Enum.take(10)
+# => [6, 12, 18, 24, 30, 36, 42, 48, 54, 60]

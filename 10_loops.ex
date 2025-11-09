@@ -39,9 +39,15 @@ list = [a: 1, b: 2, c: 3]
 doubled = for x <- list, do: x * 2
 # => [2, 4, 6, 8, 10]
 
+Enum.map(list, fn x -> x * 2 end)
+
 # You can also filter elements using guards:
 even_numbers = for x <- list, rem(x, 2) == 0, do: x * 5
 # => [10, 20]
+
+list
+|> Enum.filter(fn x -> rem(x, 2) == 0 end)
+|> Enum.map(fn x -> x * 5 end)
 
 # You can iterate over a range ascending
 result = for idx <- 1..10//1, do: idx
@@ -83,10 +89,14 @@ binary = for char <- chars, into: "", do: char
 
 # Example of using the :reduce option to calculate the sum of a list:
 list = [1, 2, 3, 4, 5]
+
+
 sum = for x <- list, reduce: 0 do
   acc -> acc + x
 end
 # => 15
+
+Enum.reduce(list, 0, fn x, acc -> acc + x end)
 
 # Example of using the :reduce option to build a string:
 words = ["hello", "world"]

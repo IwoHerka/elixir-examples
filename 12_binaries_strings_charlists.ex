@@ -16,7 +16,7 @@
 # => true
 
 घ ऒ	ओ	औ	क	ख, ą, ę, ć, ł, ...
-# 11100000 10100100 10011000
+# 11100000 10100100 10011000 ...
 
 0x0061 == 97 == ?a
 # => true
@@ -27,6 +27,11 @@
 
 # For example, for "hełło":
 # 01101000 01100101 11000101 10000010 11000101 10000010 01101111
+
+# 0xxxxxxx
+# 110xxxxx
+# 1110xxxx
+# 11110xxx
 
 # 1 byte: For code points in the ASCII range (U+0000 to U+007F), UTF-8 uses a single byte.
 # 2 bytes: For code points from U+0080 to U+07FF, UTF-8 uses two bytes.
@@ -84,7 +89,6 @@ String.to_charlist("hełło")
 
 # Which is the same as:
 [?h, ?e, ?ł, ?ł, ?o]
-
 
 # -- Examples --
 

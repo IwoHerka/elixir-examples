@@ -101,3 +101,46 @@ result =
 # -- Limitations --
 # - They cannot be used with functions that require the entire collection at once.
 # - They are not suitable for operations that need to be performed in a specific order.
+
+# -- Additional examples --
+
+# Example 1: Stream.cycle/1 - Repeats elements infinitely
+# Useful for creating repeating patterns
+cycle_stream = Stream.cycle([1, 2, 3])
+first_ten = Enum.take(cycle_stream, 10)
+# => [1, 2, 3, 1, 2, 3, 1, 2, 3, 1]
+
+# Example 2: Stream.unfold/2 - Generate infinite sequences
+# Creating a Fibonacci sequence generator
+fibonacci = Stream.unfold({0, 1}, fn {a, b} -> {a, {b, a + b}} end)
+first_ten_fibs = Enum.take(fibonacci, 10)
+# => [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+
+# Example 3: Stream.iterate/2 - Generate values by repeatedly applying a function
+# Creating powers of 2
+powers_of_two = Stream.iterate(1, fn x -> x * 2 end)
+first_eight_powers = Enum.take(powers_of_two, 8)
+# => [1, 2, 4, 8, 16, 32, 64, 128]
+
+# Example 4: Stream.chunk_every/2 - Process data in batches
+# Useful for pagination or batch processing
+large_list = 1..100
+batches =
+  large_list
+  |> Stream.chunk_every(10)
+  |> Enum.take(3)
+# => [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [11, 12, 13, 14, 15, 16, 17, 18, 19, 20], [21, 22, 23, 24, 25, 26, 27, 28, 29, 30]]
+
+# Example 5: Stream.with_index/1 - Add indices to stream elements
+# Useful for tracking position while processing
+indexed_stream =
+  ["apple", "banana", "cherry"]
+  |> Stream.with_index()
+  |> Enum.map(fn {fruit, index} -> "#{index}: #{fruit}" end)
+# => ["0: apple", "1: banana", "2: cherry"]
+
+# Example 6: Stream.repeatedly/1 - Generate values from a function repeatedly
+# Useful for generating random or time-based data
+random_stream = Stream.repeatedly(fn -> :rand.uniform(100) end)
+five_random = Enum.take(random_stream, 5)
+# => [42, 17, 89, 3, 56] (example output, actual values will vary)
